@@ -2,7 +2,7 @@ from rest_framework import viewsets
 
 from .models import Estante, Livro
 from .serializers import EstanteSerializer, LivroSerializer
-from .services import buscar_dados_do_livro
+from .services import ErroNaApiExterna, buscar_dados_do_livro
 
 CAMPOS_PREENCHIDOS_PELA_API = ['autor', 'ano', 'isbn', 'capa_url']
 
@@ -19,10 +19,22 @@ class LivroViewSet(viewsets.ModelViewSet):
 
     queryset = Livro.objects.select_related('estante')
     serializer_class = LivroSerializer
+    aviso = ''
 
     def perform_create(self, serializer):
-        """Completa com a Open Library os campos que o usuario nao enviou."""
-        dados = buscar_dados_do_livro(serializer.validated_data['titulo'])
+        """Completa com a Open Library os campos que o usuario nao enviou.
+
+        Se a API externa falhar, o livro e salvo mesmo assim e a resposta
+        leva um aviso explicando o que aconteceu.
+        """
+        try:
+            dados = buscar_dados_do_livro(serializer.validated_data['titulo'])
+        except ErroNaApiExterna as erro:
+            self.aviso = str(erro)
+            dados = None
+        else:
+            if dados is None:
+                self.aviso = 'Nenhum livro com esse titulo foi encontrado na Open Library.'
 
         complemento = {}
         if dados:
@@ -31,3 +43,9 @@ class LivroViewSet(viewsets.ModelViewSet):
                     complemento[campo] = dados[campo]
 
         serializer.save(**complemento)
+
+    def create(self, request, *args, **kwargs):
+        resposta = super().create(request, *args, **kwargs)
+        if self.aviso:
+            resposta.data['aviso'] = self.aviso
+        return resposta
