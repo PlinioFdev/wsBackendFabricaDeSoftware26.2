@@ -44,10 +44,11 @@ def buscar_dados_do_livro(titulo):
 
     livro = resultados[0]
     capa_id = livro.get('cover_i')
+    ano = livro.get('first_publish_year')
 
     return {
         'autor': (livro.get('author_name') or [''])[0],
-        'ano': livro.get('first_publish_year'),
+        'ano': ano if ano and ano > 0 else None,
         'isbn': (livro.get('isbn') or [''])[0],
         'capa_url': (
             f'https://covers.openlibrary.org/b/id/{capa_id}-M.jpg' if capa_id else ''
