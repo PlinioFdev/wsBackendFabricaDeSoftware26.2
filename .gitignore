@@ -1,0 +1,27 @@
+# Ambiente virtual
+venv/
+.venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Django
+db.sqlite3
+db.sqlite3-journal
+/media/
+/staticfiles/
+*.log
+
+# Variaveis de ambiente
+.env
+
+# Editores
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
