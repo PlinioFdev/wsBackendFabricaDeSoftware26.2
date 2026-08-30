@@ -32,7 +32,14 @@ docker compose up --build
 
 Pronto. A aplicação fica em http://localhost:8000 e as migrações rodam sozinhas.
 
-Para criar um usuário e conseguir cadastrar dados:
+Para ver o projeto já com conteúdo, crie estantes e livros de exemplo. Os dados
+vêm da Open Library na hora:
+
+```bash
+docker compose exec web python manage.py popular_biblioteca
+```
+
+Para criar um usuário e conseguir cadastrar pela página ou pela API:
 
 ```bash
 docker compose exec web python manage.py createsuperuser
@@ -56,6 +63,7 @@ pip install -r requirements.txt
 
 cp .env.example .env          # depois edite o .env
 python manage.py migrate
+python manage.py popular_biblioteca   # opcional: dados de exemplo
 python manage.py createsuperuser
 python manage.py runserver
 ```
@@ -271,6 +279,7 @@ externas são simuladas, então a suíte roda sem internet.
 ```
 wsBackendFabricaDeSoftware26.2/
 ├── biblioteca/
+│   ├── management/           comando popular_biblioteca
 │   ├── migrations/           migrações do banco
 │   ├── static/biblioteca/    folha de estilo
 │   ├── templates/            páginas HTML
