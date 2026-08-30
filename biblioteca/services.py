@@ -54,3 +54,28 @@ def buscar_dados_do_livro(titulo):
             f'https://covers.openlibrary.org/b/id/{capa_id}-M.jpg' if capa_id else ''
         ),
     }
+
+
+CAMPOS_COMPLETADOS = ['autor', 'ano', 'isbn', 'capa_url']
+
+
+def completar_campos_vazios(livro):
+    """Completa os campos vazios do livro com dados da Open Library.
+
+    Nao sobrescreve nada que o usuario tenha preenchido.
+    Devolve uma mensagem de aviso quando nao deu para completar,
+    ou uma string vazia quando deu tudo certo.
+    """
+    try:
+        dados = buscar_dados_do_livro(livro.titulo)
+    except ErroNaApiExterna as erro:
+        return str(erro)
+
+    if dados is None:
+        return 'Nenhum livro com esse titulo foi encontrado na Open Library.'
+
+    for campo in CAMPOS_COMPLETADOS:
+        if not getattr(livro, campo) and dados.get(campo):
+            setattr(livro, campo, dados[campo])
+
+    return ''
