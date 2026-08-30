@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 from decouple import Csv, config
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework_simplejwt',
 
     'biblioteca',
 ]
@@ -100,6 +102,26 @@ else:
             'PORT': config('POSTGRES_PORT', default='5432'),
         }
     }
+
+
+# Django REST Framework
+# Leitura e liberada para todo mundo. Criar, editar e apagar exigem
+# um token JWT, obtido em /api/token/.
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
 
 
 # Password validation
