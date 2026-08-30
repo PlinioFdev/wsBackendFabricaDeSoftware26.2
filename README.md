@@ -82,6 +82,11 @@ Gere uma `SECRET_KEY` nova com:
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
+> **Modo de desenvolvimento.** O `docker-compose.yml` sobe com `DEBUG=True`, que
+> e o que faz o Django servir a folha de estilo e mostrar erros detalhados. Com
+> `DEBUG=False` as paginas continuam abrindo, mas sem estilo: servir arquivo
+> estatico em producao e trabalho de um servidor web, nao do Django.
+
 ## Pagina web
 
 | Endereco | O que faz |
