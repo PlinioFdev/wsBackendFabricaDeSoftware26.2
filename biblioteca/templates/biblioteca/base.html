@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block titulo %}Minha Biblioteca{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'biblioteca/estilo.css' %}">
+</head>
+<body>
+    <header class="cabecalho">
+        <a class="marca" href="{% url 'pagina_inicial' %}">Minha Biblioteca</a>
+        <nav class="menu">
+            <a href="/api/">API</a>
+            <a href="/api/docs/">Swagger</a>
+            <a href="/admin/">Admin</a>
+            {% if user.is_authenticated %}
+                <a class="botao botao-claro" href="{% url 'cadastrar_livro' %}">Adicionar livro</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="link-botao">Sair ({{ user.username }})</button>
+                </form>
+            {% else %}
+                <a class="botao botao-claro" href="{% url 'login' %}">Entrar</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="conteudo">
+        {% if messages %}
+            <ul class="avisos">
+                {% for mensagem in messages %}
+                    <li class="aviso aviso-{{ mensagem.tags }}">{{ mensagem }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% block conteudo %}{% endblock %}
+    </main>
+
+    <footer class="rodape">
+        Workshop de Backend &middot; Fabrica de Software 26.2
+    </footer>
+</body>
+</html>

@@ -105,6 +105,13 @@ else:
     }
 
 
+# Paginas web
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'pagina_inicial'
+LOGOUT_REDIRECT_URL = 'pagina_inicial'
+
+
 # Django REST Framework
 # Leitura e liberada para todo mundo. Criar, editar e apagar exigem
 # um token JWT, obtido em /api/token/.

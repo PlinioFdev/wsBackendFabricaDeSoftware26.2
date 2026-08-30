@@ -1,0 +1,20 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block titulo %}Adicionar livro{% endblock %}
+
+{% block conteudo %}
+    <h1>Adicionar livro</h1>
+    <p class="descricao">
+        Preencha só o titulo e escolha a estante. Autor, ano e capa sao buscados
+        na Open Library automaticamente.
+    </p>
+
+    <form class="formulario" method="post">
+        {% csrf_token %}
+        {{ formulario.as_p }}
+        <div class="acoes">
+            <button type="submit" class="botao">Cadastrar</button>
+            <a class="cancelar" href="{% url 'pagina_inicial' %}">Cancelar</a>
+        </div>
+    </form>
+{% endblock %}

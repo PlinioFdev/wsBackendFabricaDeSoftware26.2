@@ -1,0 +1,42 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block conteudo %}
+    <h1>Estantes</h1>
+
+    {% for estante in estantes %}
+        <section class="estante">
+            <div class="estante-titulo">
+                <h2>{{ estante.nome }}</h2>
+                <span class="contador">{{ estante.livros.count }} livro{{ estante.livros.count|pluralize }}</span>
+            </div>
+
+            {% if estante.descricao %}
+                <p class="descricao">{{ estante.descricao }}</p>
+            {% endif %}
+
+            {% if estante.livros.all %}
+                <ul class="prateleira">
+                    {% for livro in estante.livros.all %}
+                        <li class="livro">
+                            {% if livro.capa_url %}
+                                <img class="capa" src="{{ livro.capa_url }}" alt="Capa de {{ livro.titulo }}">
+                            {% else %}
+                                <div class="capa capa-vazia">sem capa</div>
+                            {% endif %}
+                            <strong class="livro-titulo">{{ livro.titulo }}</strong>
+                            <span class="livro-autor">{{ livro.autor|default:"autor desconhecido" }}</span>
+                            <span class="livro-ano">{{ livro.ano|default:"—" }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="vazio">Nenhum livro nesta estante ainda.</p>
+            {% endif %}
+        </section>
+    {% empty %}
+        <p class="vazio">
+            Nenhuma estante cadastrada. Crie a primeira pelo
+            <a href="/admin/">painel administrativo</a> ou pela <a href="/api/estantes/">API</a>.
+        </p>
+    {% endfor %}
+{% endblock %}
