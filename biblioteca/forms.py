@@ -4,17 +4,17 @@ from .models import Livro
 
 
 class LivroForm(forms.ModelForm):
-    """Formulario da pagina web para cadastrar um livro.
+    """Formulário da página web para cadastrar um livro.
 
-    Só o titulo e a estante sao obrigatorios: autor, ano, isbn e capa
-    sao completados pela Open Library quando ficam em branco.
+    Só o título e a estante são obrigatórios: autor, ano, isbn e capa
+    são completados pela Open Library quando ficam em branco.
     """
 
     class Meta:
         model = Livro
         fields = ['titulo', 'estante', 'autor', 'ano']
         labels = {
-            'titulo': 'Titulo',
+            'titulo': 'Título',
             'estante': 'Estante',
             'autor': 'Autor (opcional)',
             'ano': 'Ano (opcional)',

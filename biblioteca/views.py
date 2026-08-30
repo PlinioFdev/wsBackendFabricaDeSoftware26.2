@@ -20,9 +20,9 @@ class LivroViewSet(viewsets.ModelViewSet):
     aviso = ''
 
     def perform_create(self, serializer):
-        """Completa com a Open Library os campos que o usuario nao enviou.
+        """Completa com a Open Library os campos que o usuário não enviou.
 
-        Se a API externa falhar, o livro e salvo mesmo assim e a resposta
+        Se a API externa falhar, o livro é salvo mesmo assim e a resposta
         leva um aviso explicando o que aconteceu.
         """
         livro = Livro(**serializer.validated_data)

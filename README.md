@@ -1,11 +1,11 @@
 # wsBackendFabricaDeSoftware26.2
 
-API em Django REST Framework para organizar uma biblioteca pessoal, com pagina
-web, autenticacao JWT e documentacao Swagger.
-Projeto do Workshop de Backend da Fabrica de Software 26.2.
+API em Django REST Framework para organizar uma biblioteca pessoal, com página
+web, autenticação JWT e documentação Swagger.
+Projeto do Workshop de Backend da Fábrica de Software 26.2.
 
-O usuario cria estantes e coloca livros dentro delas. Ao cadastrar um livro
-basta informar o titulo: a API busca autor, ano e capa na
+O usuário cria estantes e coloca livros dentro delas. Ao cadastrar um livro
+basta informar o título: a API busca autor, ano e capa na
 [Open Library](https://openlibrary.org) e preenche o resto sozinha.
 
 ## Tecnologias
@@ -15,14 +15,14 @@ basta informar o titulo: a API busca autor, ano e capa na
 - Django REST Framework 3.18
 - PostgreSQL 17
 - Docker e Docker Compose
-- Simple JWT (autenticacao por token)
+- Simple JWT (autenticação por token)
 - drf-spectacular (Swagger)
 - requests (consumo da API externa)
 
 ## Como rodar com Docker
 
-E o jeito recomendado: sobe a aplicacao e o PostgreSQL juntos, sem instalar nada
-alem do Docker.
+É o jeito recomendado: sobe a aplicação e o PostgreSQL juntos, sem instalar nada
+além do Docker.
 
 ```bash
 git clone https://github.com/PlinioFdev/wsBackendFabricaDeSoftware26.2.git
@@ -30,9 +30,9 @@ cd wsBackendFabricaDeSoftware26.2
 docker compose up --build
 ```
 
-Pronto. A aplicacao fica em http://localhost:8000 e as migracoes rodam sozinhas.
+Pronto. A aplicação fica em http://localhost:8000 e as migrações rodam sozinhas.
 
-Para criar um usuario e conseguir cadastrar dados:
+Para criar um usuário e conseguir cadastrar dados:
 
 ```bash
 docker compose exec web python manage.py createsuperuser
@@ -46,7 +46,7 @@ docker compose down
 
 ## Como rodar sem Docker
 
-Precisa de Python 3.14. Se voce nao tem PostgreSQL instalado, use SQLite
+Precisa de Python 3.14. Se você não tem PostgreSQL instalado, use SQLite
 colocando `USE_SQLITE=True` no `.env`.
 
 ```bash
@@ -60,19 +60,19 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-## Variaveis de ambiente
+## Variáveis de ambiente
 
-Nenhum dado sensivel fica no codigo. Copie `.env.example` para `.env` e ajuste.
+Nenhum dado sensível fica no código. Copie `.env.example` para `.env` e ajuste.
 
-| Variavel | Para que serve | Padrao |
+| Variável | Para que serve | Padrao |
 |---|---|---|
-| `SECRET_KEY` | Chave secreta do Django | obrigatoria |
+| `SECRET_KEY` | Chave secreta do Django | obrigatória |
 | `DEBUG` | Modo de desenvolvimento | `False` |
 | `ALLOWED_HOSTS` | Hosts liberados, separados por virgula | `localhost,127.0.0.1` |
 | `POSTGRES_DB` | Nome do banco | `biblioteca` |
-| `POSTGRES_USER` | Usuario do banco | `biblioteca` |
+| `POSTGRES_USER` | Usuário do banco | `biblioteca` |
 | `POSTGRES_PASSWORD` | Senha do banco | `biblioteca` |
-| `POSTGRES_HOST` | Endereco do banco | `localhost` |
+| `POSTGRES_HOST` | Endereço do banco | `localhost` |
 | `POSTGRES_PORT` | Porta do banco | `5432` |
 | `USE_SQLITE` | Usa SQLite no lugar do PostgreSQL | `False` |
 
@@ -83,21 +83,21 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 ```
 
 > **Modo de desenvolvimento.** O `docker-compose.yml` sobe com `DEBUG=True`, que
-> e o que faz o Django servir a folha de estilo e mostrar erros detalhados. Com
-> `DEBUG=False` as paginas continuam abrindo, mas sem estilo: servir arquivo
-> estatico em producao e trabalho de um servidor web, nao do Django.
+> é o que faz o Django servir a folha de estilo e mostrar erros detalhados. Com
+> `DEBUG=False` as páginas continuam abrindo, mas sem estilo: servir arquivo
+> estático em produção é trabalho de um servidor web, não do Django.
 
-## Pagina web
+## Página web
 
-| Endereco | O que faz |
+| Endereço | O que faz |
 |---|---|
 | `/` | Lista as estantes com os livros e as capas |
-| `/livros/novo/` | Formulario para cadastrar livro (exige login) |
+| `/livros/novo/` | Formulário para cadastrar livro (exige login) |
 | `/contas/login/` | Tela de entrada |
 | `/admin/` | Painel administrativo do Django |
 
-No formulario basta digitar o titulo e escolher a estante. Autor, ano e capa vem
-da Open Library. Se voce preencher o autor na mao, o seu valor e mantido.
+No formulário basta digitar o título e escolher a estante. Autor, ano e capa vêm
+da Open Library. Se você preencher o autor na mao, o seu valor é mantido.
 
 ## Modelagem
 
@@ -119,15 +119,15 @@ criada_em                   autor
 
 ## Endpoints da API
 
-Leitura e liberada para qualquer um. Criar, editar e apagar exigem token.
+Leitura é liberada para qualquer um. Criar, editar e apagar exigem token.
 
 ### Estantes
 
 | Metodo | Rota | O que faz | Precisa de token |
 |---|---|---|---|
-| GET | `/api/estantes/` | Lista as estantes | nao |
+| GET | `/api/estantes/` | Lista as estantes | não |
 | POST | `/api/estantes/` | Cria uma estante | sim |
-| GET | `/api/estantes/{id}/` | Detalha uma estante | nao |
+| GET | `/api/estantes/{id}/` | Detalha uma estante | não |
 | PUT | `/api/estantes/{id}/` | Atualiza a estante | sim |
 | PATCH | `/api/estantes/{id}/` | Atualiza um campo | sim |
 | DELETE | `/api/estantes/{id}/` | Apaga a estante | sim |
@@ -136,16 +136,16 @@ Leitura e liberada para qualquer um. Criar, editar e apagar exigem token.
 
 | Metodo | Rota | O que faz | Precisa de token |
 |---|---|---|---|
-| GET | `/api/livros/` | Lista os livros | nao |
+| GET | `/api/livros/` | Lista os livros | não |
 | POST | `/api/livros/` | Cria um livro | sim |
-| GET | `/api/livros/{id}/` | Detalha um livro | nao |
+| GET | `/api/livros/{id}/` | Detalha um livro | não |
 | PUT | `/api/livros/{id}/` | Atualiza o livro | sim |
 | PATCH | `/api/livros/{id}/` | Atualiza um campo | sim |
 | DELETE | `/api/livros/{id}/` | Apaga o livro | sim |
 
-## Autenticacao JWT
+## Autenticação JWT
 
-Pegue o token com o usuario criado no `createsuperuser`:
+Pegue o token com o usuário criado no `createsuperuser`:
 
 ```bash
 curl -X POST http://localhost:8000/api/token/ \
@@ -162,7 +162,7 @@ Resposta:
 }
 ```
 
-Use o `access` no cabecalho das requisicoes de escrita:
+Use o `access` no cabeçalho das requisições de escrita:
 
 ```bash
 curl -X POST http://localhost:8000/api/livros/ \
@@ -181,9 +181,9 @@ curl -X POST http://localhost:8000/api/token/refresh/ \
 
 Sem token, as rotas de escrita respondem **401**.
 
-## Documentacao Swagger
+## Documentação Swagger
 
-| Endereco | O que e |
+| Endereço | O que e |
 |---|---|
 | `/api/docs/` | Swagger UI, para ler e testar a API pelo navegador |
 | `/api/schema/` | Arquivo OpenAPI 3 gerado automaticamente |
@@ -196,10 +196,10 @@ Ao criar um livro, `biblioteca/services.py` consulta a Open Library:
 GET https://openlibrary.org/search.json?q=<titulo>&limit=1
 ```
 
-Os campos `autor`, `ano`, `isbn` e `capa_url` sao preenchidos **apenas quando vem
-vazios**. Se voce digitar o autor, o seu valor e mantido.
+Os campos `autor`, `ano`, `isbn` e `capa_url` são preenchidos **apenas quando vêm
+vazios**. Se você digitar o autor, o seu valor é mantido.
 
-Exemplo, mandando so o titulo:
+Exemplo, mandando só o título:
 
 ```bash
 curl -X POST http://localhost:8000/api/livros/ \
@@ -226,18 +226,18 @@ Resposta:
 
 ## Tratamento de erros
 
-A API externa pode falhar, e isso nao pode derrubar o cadastro. Todos os casos
+A API externa pode falhar, e isso não pode derrubar o cadastro. Todos os casos
 abaixo salvam o livro normalmente com status **201** e devolvem um campo `aviso`
 explicando o que aconteceu:
 
 | Situacao | Aviso devolvido |
 |---|---|
-| Sem conexao (`ConnectionError`) | Nao foi possivel conectar na Open Library. |
+| Sem conexao (`ConnectionError`) | Não foi possível conectar na Open Library. |
 | Demorou demais (`Timeout`) | A Open Library demorou demais para responder. |
 | Outra falha de rede | Falha ao consultar a Open Library. |
 | Status diferente de 200 | A Open Library respondeu com status 500. |
-| Resposta nao e um JSON valido | A Open Library devolveu uma resposta invalida. |
-| Busca sem resultado | Nenhum livro com esse titulo foi encontrado na Open Library. |
+| Resposta não e um JSON valido | A Open Library devolveu uma resposta inválida. |
+| Busca sem resultado | Nenhum livro com esse título foi encontrado na Open Library. |
 
 Exemplo de resposta com a Open Library fora do ar:
 
@@ -248,11 +248,11 @@ Exemplo de resposta com a Open Library fora do ar:
   "autor": "",
   "ano": null,
   "estante": 1,
-  "aviso": "Nao foi possivel conectar na Open Library."
+  "aviso": "Não foi possível conectar na Open Library."
 }
 ```
 
-A Open Library tambem devolve ano negativo em algumas obras antigas, o que o
+A Open Library também devolve ano negativo em algumas obras antigas, o que o
 banco recusaria. Nesse caso o ano e gravado como nulo em vez de quebrar.
 
 ## Testes
@@ -262,33 +262,33 @@ docker compose exec web python manage.py test     # com Docker
 python manage.py test                             # sem Docker
 ```
 
-Sao 30 testes cobrindo models e relacionamento, consumo da Open Library,
-tratamento de erro, CRUD da API, autenticacao JWT e as paginas web. As chamadas
-externas sao simuladas, entao a suite roda sem internet.
+São 30 testes cobrindo models e relacionamento, consumo da Open Library,
+tratamento de erro, CRUD da API, autenticação JWT e as páginas web. As chamadas
+externas são simuladas, então a suíte roda sem internet.
 
 ## Estrutura do projeto
 
 ```
 wsBackendFabricaDeSoftware26.2/
 ├── biblioteca/
-│   ├── migrations/           migracoes do banco
+│   ├── migrations/           migrações do banco
 │   ├── static/biblioteca/    folha de estilo
-│   ├── templates/            paginas HTML
+│   ├── templates/            páginas HTML
 │   ├── tests/                testes automatizados
 │   ├── admin.py              registro dos models no painel admin
-│   ├── forms.py              formulario da pagina web
+│   ├── forms.py              formulário da página web
 │   ├── models.py             Estante e Livro
-│   ├── serializers.py        conversao para JSON
+│   ├── serializers.py        conversão para JSON
 │   ├── services.py           consumo da Open Library
 │   ├── urls.py               rotas da API
-│   ├── urls_web.py           rotas da pagina web
+│   ├── urls_web.py           rotas da página web
 │   ├── views.py              viewsets do CRUD
-│   └── views_web.py          views das paginas
+│   └── views_web.py          views das páginas
 ├── projeto/
 │   ├── settings.py
 │   └── urls.py
-├── .env.example              modelo das variaveis de ambiente
-├── docker-compose.yml        aplicacao + PostgreSQL
+├── .env.example              modelo das variáveis de ambiente
+├── docker-compose.yml        aplicação + PostgreSQL
 ├── Dockerfile
 ├── manage.py
 ├── requirements.txt

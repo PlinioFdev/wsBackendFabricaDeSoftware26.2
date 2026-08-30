@@ -1,4 +1,4 @@
-"""Views da pagina web, feitas com template do Django."""
+"""Views da página web, feitas com template do Django."""
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -17,7 +17,7 @@ def pagina_inicial(request):
 
 @login_required
 def cadastrar_livro(request):
-    """Cadastra um livro pelo formulario, completando com a Open Library."""
+    """Cadastra um livro pelo formulário, completando com a Open Library."""
     if request.method == 'POST':
         formulario = LivroForm(request.POST)
         if formulario.is_valid():
