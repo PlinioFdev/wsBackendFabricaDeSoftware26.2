@@ -138,13 +138,14 @@ A API externa pode falhar, e isso nao pode derrubar o cadastro. Todos os casos
 abaixo salvam o livro normalmente com status **201** e devolvem um campo
 `aviso` explicando o que aconteceu:
 
-| Situacao                          | Aviso devolvido                                        |
-|-----------------------------------|--------------------------------------------------------|
-| Sem conexao (`ConnectionError`)   | Nao foi possivel conectar na Open Library.             |
-| Demorou demais (`Timeout`)        | A Open Library demorou demais para responder.          |
-| Status diferente de 200           | A Open Library respondeu com status 500.               |
-| Resposta nao e um JSON valido     | A Open Library devolveu uma resposta invalida.         |
-| Busca sem resultado               | Nenhum livro com esse titulo foi encontrado.           |
+| Situacao                            | Aviso devolvido                                          |
+|-------------------------------------|----------------------------------------------------------|
+| Sem conexao (`ConnectionError`)     | Nao foi possivel conectar na Open Library.               |
+| Demorou demais (`Timeout`)          | A Open Library demorou demais para responder.            |
+| Outra falha de rede                 | Falha ao consultar a Open Library.                       |
+| Status diferente de 200             | A Open Library respondeu com status 500.                 |
+| Resposta nao e um JSON valido       | A Open Library devolveu uma resposta invalida.           |
+| Busca sem resultado                 | Nenhum livro com esse titulo foi encontrado na Open Library. |
 
 Exemplo de resposta com a Open Library fora do ar:
 
@@ -164,6 +165,7 @@ Exemplo de resposta com a Open Library fora do ar:
 ```
 wsBackendFabricaDeSoftware26.2/
 ├── biblioteca/
+│   ├── migrations/       migracoes do banco
 │   ├── admin.py          registro dos models no painel admin
 │   ├── models.py         Estante e Livro
 │   ├── serializers.py    conversao para JSON
