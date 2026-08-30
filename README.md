@@ -72,7 +72,7 @@ python manage.py runserver
 
 Nenhum dado sensível fica no código. Copie `.env.example` para `.env` e ajuste.
 
-| Variável | Para que serve | Padrao |
+| Variável | Para que serve | Padrão |
 |---|---|---|
 | `SECRET_KEY` | Chave secreta do Django | obrigatória |
 | `DEBUG` | Modo de desenvolvimento | `False` |
@@ -105,7 +105,13 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 | `/admin/` | Painel administrativo do Django |
 
 No formulário basta digitar o título e escolher a estante. Autor, ano e capa vêm
-da Open Library. Se você preencher o autor na mao, o seu valor é mantido.
+da Open Library. Se você preencher o autor na mão, o seu valor é mantido.
+
+As páginas usam o **Django Template Language**, o motor de template nativo do
+framework. A sintaxe é a mesma do Jinja, mas o DTL integra direto com
+`{% csrf_token %}`, `{% url %}`, a renderização de formulários e o sistema de
+mensagens do Django — recursos que precisariam ser reimplementados na mão com
+Jinja2.
 
 ## Modelagem
 
