@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_spectacular',
 
     'biblioteca',
 ]
@@ -116,6 +117,19 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# Documentacao Swagger, disponivel em /api/docs/
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'API da Biblioteca',
+    'DESCRIPTION': (
+        'API para organizar estantes e livros. Os dados do livro sao '
+        'completados automaticamente pela Open Library.'
+    ),
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }
 
 SIMPLE_JWT = {
