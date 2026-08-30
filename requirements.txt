@@ -1,4 +1,5 @@
 Django==6.1
 djangorestframework==3.18.0
 requests==2.34.2
+psycopg[binary]==3.3.4
 python-decouple==3.8

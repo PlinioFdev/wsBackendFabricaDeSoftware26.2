@@ -78,12 +78,28 @@ WSGI_APPLICATION = 'projeto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# O banco padrao e o PostgreSQL, que sobe junto com a aplicacao no
+# docker-compose. Para rodar sem Docker e sem PostgreSQL instalado,
+# basta colocar USE_SQLITE=True no .env.
+
+if config('USE_SQLITE', default=False, cast=bool):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('POSTGRES_DB', default='biblioteca'),
+            'USER': config('POSTGRES_USER', default='biblioteca'),
+            'PASSWORD': config('POSTGRES_PASSWORD', default='biblioteca'),
+            'HOST': config('POSTGRES_HOST', default='localhost'),
+            'PORT': config('POSTGRES_PORT', default='5432'),
+        }
+    }
 
 
 # Password validation
